@@ -55,6 +55,18 @@ build CMakeFiles/YasRenderer.dir/main.cpp.o: CXX_COMPILER__YasRenderer_unscanned
   OBJECT_DIR = CMakeFiles/YasRenderer.dir
   OBJECT_FILE_DIR = CMakeFiles/YasRenderer.dir
 
+build CMakeFiles/YasRenderer.dir/renderer.cpp.o: CXX_COMPILER__YasRenderer_unscanned_Debug /home/lukesawicki/CLionProjects/YasRenderer/YasRenderer/renderer.cpp || cmake_object_order_depends_target_YasRenderer
+  DEP_FILE = CMakeFiles/YasRenderer.dir/renderer.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/YasRenderer.dir
+  OBJECT_FILE_DIR = CMakeFiles/YasRenderer.dir
+
+build CMakeFiles/YasRenderer.dir/pixels_table.cpp.o: CXX_COMPILER__YasRenderer_unscanned_Debug /home/lukesawicki/CLionProjects/YasRenderer/YasRenderer/pixels_table.cpp || cmake_object_order_depends_target_YasRenderer
+  DEP_FILE = CMakeFiles/YasRenderer.dir/pixels_table.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/YasRenderer.dir
+  OBJECT_FILE_DIR = CMakeFiles/YasRenderer.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target YasRenderer
@@ -63,7 +75,7 @@ build CMakeFiles/YasRenderer.dir/main.cpp.o: CXX_COMPILER__YasRenderer_unscanned
 #############################################
 # Link the executable YasRenderer
 
-build YasRenderer: CXX_EXECUTABLE_LINKER__YasRenderer_Debug CMakeFiles/YasRenderer.dir/main.cpp.o | /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so
+build YasRenderer: CXX_EXECUTABLE_LINKER__YasRenderer_Debug CMakeFiles/YasRenderer.dir/main.cpp.o CMakeFiles/YasRenderer.dir/renderer.cpp.o CMakeFiles/YasRenderer.dir/pixels_table.cpp.o | /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so
   FLAGS = -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libSDL2main.a  /usr/lib/x86_64-linux-gnu/libSDL2.so
   OBJECT_DIR = CMakeFiles/YasRenderer.dir
