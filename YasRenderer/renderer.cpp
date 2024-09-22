@@ -266,12 +266,11 @@ void DrawLine(const Vector2D<float> &point_0, const Vector2D<float> &point_1,
   }
 }
 
-//  TODO refactor change name to DrawLineStrip
-void DrawNumbersAsGroupOfLines(Vector2D<float> *vertices,
-                               int maximum_number_of_vertices,
-                               const Vector4D<Uint8> &color,
-                               bool are_lines_continuous,
-                               PixelsTable &pixels_table) {
+void DrawLineStrip(Vector2D<float> *vertices,
+                   int maximum_number_of_vertices,
+                   const Vector4D<Uint8> &color,
+                   bool are_lines_continuous,
+                   PixelsTable &pixels_table) {
   int step = 1;
   if (!are_lines_continuous) {
     step = 2;
@@ -308,11 +307,6 @@ void SwapVectors(Vector2D<float> &point0, Vector2D<float> &point1) {
 void DrawCartesianAxes(PixelsTable &pixels_table) {
   HorizontalLineOnWholeScreen(pixels_table, 0, kRed);
   VerticalLineOnWholeScreen(pixels_table, 0, kGreen);
-}
-
-void DrawCrossHair(float x, float y, PixelsTable &pixels_table,
-                   bool is_full_screen) {
-  DrawCrossHair(x, y, pixels_table, is_full_screen, kGreen);
 }
 
 void DrawCrossHair(float x, float y, PixelsTable &pixels_table,
@@ -382,8 +376,8 @@ int ScreenPixelPositionToArrayPosition(Vector2D<int> &point, int window_width) {
   return point.y_ * window_width + point.x_;
 }
 
-void WindowPositionToCartesianPosition(float &x, float &y,
-                                       Vector2D<int> *window_dimensions) {
-  x = x - static_cast<int>(0.5 * window_dimensions->x_);
-  y = (-(y - static_cast<int>(0.5 * window_dimensions->y_)));
+void WindowPositionToCartesianPosition(float &x, float &y, int window_width,
+                                       int window_height) {
+  x = x - static_cast<int>(0.5 * window_width);
+  y = (-(y - static_cast<int>(0.5 * window_height)));
 }

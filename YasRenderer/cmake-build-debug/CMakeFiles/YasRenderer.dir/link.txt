@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/YasRenderer.dir/main.cpp.o CMakeFiles/YasRenderer.dir/renderer.cpp.o CMakeFiles/YasRenderer.dir/pixels_table.cpp.o CMakeFiles/YasRenderer.dir/yas_application.cpp.o CMakeFiles/YasRenderer.dir/time_picker.cpp.o -o YasRenderer  /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so

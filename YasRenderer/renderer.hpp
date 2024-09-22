@@ -40,11 +40,11 @@ void DrawLine(const Vector2D<float> &point_0, const Vector2D<float> &point_1,
 
 Vector2D<float> *GenerateVerticesFromNumbers(const std::vector<int> &numbers);
 
-void DrawNumbersAsGroupOfLines(Vector2D<float> *vertices,
-                               int maximum_number_of_vertices,
-                               const Vector4D<Uint8> &color,
-                               bool are_lines_continuous,
-                               PixelsTable &pixels_table);
+void DrawLineStrip(Vector2D<float> *vertices,
+                   int maximum_number_of_vertices,
+                   const Vector4D<Uint8> &color,
+                   bool are_lines_continuous,
+                   PixelsTable &pixels_table);
 
 void SwapVectors(Vector2D<int> &point_0, Vector2D<int> &point_1);
 
@@ -56,8 +56,8 @@ void VerticalLineOnWholeScreen(PixelsTable &pixels_table, int x,
 
 void DrawCartesianAxes(PixelsTable &pixels_table);
 
-void DrawCrossHair(float x, float y, PixelsTable &pixels_table,
-                   bool is_full_screen);
+void DrawDefaultCrossHair(float x, float y, PixelsTable &pixels_table,
+                          bool is_full_screen);
 
 void DrawCrossHair(float x, float y, PixelsTable &pixels_table,
                    bool is_full_screen, Vector4D<Uint8> color);
@@ -72,13 +72,7 @@ int ScreenPixelPositionToArrayPosition(Vector2D<int> &point, int window_width);
 
 int ScreenPixelPositionToArrayPosition(int x, int y, int window_width);
 
-void WindowPositionToCartesianPosition(float &x, float &y,
-                                       Vector2D<int> *window_dimensions);
-
-void DrawMandelbrotSet();
-
-void DrawRectangle(PixelsTable &pixels_table, int x, int y, int width,
-                   int height, Vector4D<Uint8> color);
-
+void WindowPositionToCartesianPosition(float &x, float &y, int window_width,
+                                       int window_height);
 
 #endif //RENDERER_HPP

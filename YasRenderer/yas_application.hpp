@@ -11,8 +11,8 @@
 
 class YasApplication {
   public:
-    constexpr int kScreenWidth = 640;
-    constexpr int kScreenHeight = 480;
+    static constexpr int kScreenWidth = 640;
+    static constexpr int kScreenHeight = 480;
 
     static YasApplication *GetInstance() {
       if (instance_ != nullptr) {
@@ -23,23 +23,53 @@ class YasApplication {
     }
 
     void Initialize();
+    void Run();
 
   private:
     static YasApplication *instance_;
-    int endianness_;
+    int endianness_=-1;
     TimePicker timePicker;
-    SDL_Window *window_;
-    SDL_Renderer *renderer_;
-    SDL_Texture *screen_texture_;
-    PixelsTable *pixels_table_;
+    SDL_Window *window_ = nullptr;
+    SDL_Renderer *sdl_renderer_ = nullptr;
+    SDL_Texture *screen_texture_ = nullptr;
+    PixelsTable *pixels_table_ = nullptr;
     SDL_Event event_;
     bool quit_ = false;
-    double time_;
-    double new_time_;
-    double delta_time_;
-    double fps_;
-    double fps_time_;
-    unsigned int frames_;
+    double time_ = 0.0;
+    double new_time_ = 0.0;
+    double delta_time_ = 0.0;
+    double fps_ = 0.0;
+    double fps_time_ = 0.0;
+    unsigned int frames_ = 0.0;
+
+    struct Input {
+      bool left_;
+      bool right_;
+      bool up_;
+      bool down_;
+      bool rotate_Counter_clockwise_;
+    };
+
+    struct MousePositionChangeInformation {
+      double x_ = 0.0;
+      double y_ = 0.0;
+      bool mouse_moved_ = false;
+      bool left_mouse_button_;
+      bool right_mouse_button_;
+    };
+
+    Input* input_ = new Input();
+    MousePositionChangeInformation* mouse_position_change_information_ = new MousePositionChangeInformation();
+    float mouse_x_position_ = false;
+    float mouse_y_position_ = false;
+
+    int test_line_point_0_x_ = 0;
+    int test_line_point_0_y_ = 0;
+    int test_line_point_1_x_ = 64;
+    int test_line_point_1_y_ = 0;
+
+    Vector2D<float> test_static_line_point_0;
+    Vector2D<float> test_static_line_point_1;
 
     void CheckEndianness();
 
@@ -47,7 +77,11 @@ class YasApplication {
 
     void PrepareRenderingSettings();
 
+    void PrepareTestStuff();
+
     void Update();
+
+    void HandleTestStuff();
 
     void HandleInput();
 
@@ -55,9 +89,15 @@ class YasApplication {
 
     void HandleMouseInput();
 
+    void HandleMouseMovement();
+
     void Render();
 
-    void Run();
+    void DrawHudElements();
+
+    void DrawTestStuff();
+
+    void rotateTestLineInToMouseDirection();
 
     void Clean();
 };
