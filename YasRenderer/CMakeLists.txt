@@ -14,6 +14,10 @@ add_executable(YasRenderer main.cpp
         pixels_table.hpp
         vector_2d.hpp
         vector_4d.hpp
+        yas_application.cpp
+        yas_application.hpp
+        time_picker.cpp
+        time_picker.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})

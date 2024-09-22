@@ -13,7 +13,6 @@
 #include "vector_4d.hpp"
 
 class PixelsTable;
-class GameObject;
 
 const float kPi = 3.141592F;
 const Uint8 kNumberOfColors = 4;
@@ -39,8 +38,6 @@ const Vector4D<Uint8> kPolygon(250, 180, 10, 0);
 void DrawLine(const Vector2D<float> &point_0, const Vector2D<float> &point_1,
               PixelsTable &pixels_table, const Vector4D<Uint8> &drawing_color);
 
-void DrawPolygon(GameObject *polygon, PixelsTable &pixels_table);
-
 Vector2D<float> *GenerateVerticesFromNumbers(const std::vector<int> &numbers);
 
 void DrawNumbersAsGroupOfLines(Vector2D<float> *vertices,
@@ -48,8 +45,6 @@ void DrawNumbersAsGroupOfLines(Vector2D<float> *vertices,
                                const Vector4D<Uint8> &color,
                                bool are_lines_continuous,
                                PixelsTable &pixels_table);
-
-void DrawPolygonDirection(GameObject *polygon, PixelsTable &pixels_table);
 
 void SwapVectors(Vector2D<int> &point_0, Vector2D<int> &point_1);
 
