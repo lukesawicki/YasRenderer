@@ -8,7 +8,7 @@
 #include "yas_application.hpp"
 #include "renderer.hpp"
 
-YasApplication* YasApplication::instance_ = nullptr;
+YasApplication *YasApplication::instance_ = nullptr;
 
 void YasApplication::Initialize() {
   PrepareBasicSettings();
@@ -62,6 +62,11 @@ void YasApplication::PrepareRenderingSettings() {
 }
 
 void YasApplication::PrepareTestStuff() {
+  test_dynamic_line_point_0.x_ = 80;
+  test_dynamic_line_point_0.y_ = 80;
+  test_dynamic_line_point_1.x_ = 160;
+  test_dynamic_line_point_1.y_ = 160;
+
   test_static_line_point_0.x_ = 0;
   test_static_line_point_0.y_ = 0;
   test_static_line_point_1.x_ = 640;
@@ -73,8 +78,7 @@ void YasApplication::Update() {
 }
 
 void YasApplication::HandleTestStuff() {
-  if (mouse_position_change_information_->mouse_moved_)
-  {
+  if (mouse_position_change_information_->mouse_moved_) {
     rotateTestLineInToMouseDirection();
   }
 }
@@ -89,34 +93,32 @@ void YasApplication::HandleInput() {
 }
 
 void YasApplication::HandleKeyboardInput() {
-  if (event_.type == SDL_KEYDOWN)
-  {
-    switch (event_.key.keysym.sym)
-    {
+  if (event_.type == SDL_KEYDOWN) {
+    switch (event_.key.keysym.sym) {
       case SDLK_ESCAPE:
-        ;
-      break;
+        quit_ = true;;
+        break;
       case SDLK_SPACE:
         ;
-      break;
+        break;
       case SDLK_w:
         input_->up_ = true;
-      break;
+        break;
       case SDLK_s:
         input_->down_ = true;
-      break;
+        break;
       case SDLK_a:
         input_->left_ = true;
-      break;
+        break;
       case SDLK_d:
         input_->right_ = true;
-      break;
+        break;
       case SDLK_RETURN:
         ;
-      break;
+        break;
       case SDLK_TAB:
         ;
-      break;
+        break;
       default:
         ;
     }
@@ -126,16 +128,16 @@ void YasApplication::HandleKeyboardInput() {
     switch (event_.key.keysym.sym) {
       case SDLK_w:
         input_->up_ = false;
-      break;
+        break;
       case SDLK_s:
         input_->down_ = false;
-      break;
+        break;
       case SDLK_a:
         input_->left_ = false;
-      break;
+        break;
       case SDLK_d:
         input_->right_ = false;
-      break;
+        break;
       default:
         ;
     }
@@ -143,80 +145,79 @@ void YasApplication::HandleKeyboardInput() {
 }
 
 void YasApplication::HandleMouseInput() {
-  if (event_.type == SDL_MOUSEMOTION)
-  {
+  if (event_.type == SDL_MOUSEMOTION) {
     HandleMouseMovement();
   }
-  if (event_.type == SDL_MOUSEBUTTONDOWN && event_.button.button == SDL_BUTTON_LEFT)
-  {
+  if (event_.type == SDL_MOUSEBUTTONDOWN && event_.button.button ==
+      SDL_BUTTON_LEFT) {
     ;
   }
 
-  if (event_.type == SDL_MOUSEBUTTONUP && event_.button.button == SDL_BUTTON_LEFT)
-  {
+  if (event_.type == SDL_MOUSEBUTTONUP && event_.button.button ==
+      SDL_BUTTON_LEFT) {
     ;
   }
 }
 
-void YasApplication::HandleMouseMovement()
-{
+void YasApplication::HandleMouseMovement() {
   int x;
   int y;
   SDL_GetMouseState(&x, &y);
   mouse_position_change_information_->mouse_moved_ = true;
   mouse_position_change_information_->x_ = x;
   mouse_position_change_information_->y_ = y;
-  mouse_x_position_ = static_cast<float>(mouse_position_change_information_->x_);
-  mouse_y_position_ = static_cast<float>(mouse_position_change_information_->y_);
+  mouse_x_position_ = static_cast<float>(mouse_position_change_information_->
+    x_);
+  mouse_y_position_ = static_cast<float>(mouse_position_change_information_->
+    y_);
 
-  WindowPositionToCartesianPosition(mouse_x_position_, mouse_y_position_, kScreenWidth, kScreenHeight);
+  WindowPositionToCartesianPosition(mouse_x_position_, mouse_y_position_,
+                                    kScreenWidth, kScreenHeight);
 }
 
 void YasApplication::Render() {
-
   pixels_table_->ClearColor(kBlack);
 
   DrawHudElements();
 
-  SDL_UpdateTexture(screen_texture_ , NULL, pixels_table_->pixels_, kScreenWidth * 4);
-  SDL_RenderCopyExF(sdl_renderer_, screen_texture_, NULL, NULL, 0, NULL, SDL_RendererFlip::SDL_FLIP_NONE); //SDL_FLIP_VERTICAL);
+  SDL_UpdateTexture(screen_texture_, NULL, pixels_table_->pixels_,
+                    kScreenWidth * 4);
+  SDL_RenderCopyExF(sdl_renderer_, screen_texture_, NULL, NULL, 0, NULL,
+                    SDL_RendererFlip::SDL_FLIP_NONE); //SDL_FLIP_VERTICAL);
   SDL_RenderPresent(sdl_renderer_);
 }
 
 void YasApplication::DrawHudElements() {
-  DrawCrossHair(mouse_x_position_, mouse_y_position_, *pixels_table_, false, kGreen);
+  DrawCrossHair(mouse_x_position_, mouse_y_position_, *pixels_table_, false,
+                kGreen);
   DrawTestStuff();
 }
 
 void YasApplication::DrawTestStuff() {
-  // Vector2D<float> start_point = Vector2D<float>(test_line_point_0_x_, test_line_point_0_y_);
-  // Vector2D<float> end_point = Vector2D<float>(test_line_point_1_x_, test_line_point_1_y_);
-  // DrawLine(start_point, end_point, *pixels_table_, kYellow);
-  DrawLine(test_static_line_point_0, test_static_line_point_1, *pixels_table_, kRed);
+  DrawLine(test_dynamic_line_point_0, test_dynamic_line_point_1, *pixels_table_,
+           kYellow);
+  DrawLine(test_static_line_point_0, test_static_line_point_1, *pixels_table_,
+           kRed);
 }
 
 void YasApplication::rotateTestLineInToMouseDirection() {
-  if (mouse_x_position_ <= kScreenWidth && mouse_y_position_ <= kScreenHeight)
-  {
-    float current_x_mouse_possition = mouse_x_position_;
-    float current_y_mouse_possition = mouse_y_position_;
+  Vector2D<float> currentMousePosition = Vector2D<float>(
+    mouse_x_position_, mouse_y_position_);
 
-    //WindowPositionToCartesianPosition(current_x_mouse_possition, current_y_mouse_possition, kScreenWidth, kScreenHeight);
+  // Vector2D<float> mouse_direction_from_start_start_line_point = Vector2D<float>::DirectionVectorFromBoundVector(test_dynamic_line_point_0, currentMousePosition);
 
-    Vector2D<float> currentMousePosition = Vector2D<float>(current_x_mouse_possition, current_y_mouse_possition);
+  Vector2D<float> line_direction_vector = Vector2D<
+    float>::DirectionVectorFromBoundVector(test_dynamic_line_point_0,
+                                           test_dynamic_line_point_1);
 
-    Vector2D<float> beginning_of_test_line = Vector2D<float>(test_line_point_0_x_, test_line_point_0_y_);
+  Vector2D<float> mouse_direction_vector = Vector2D<float>(
+    currentMousePosition.x_, currentMousePosition.y_);
 
-    Vector2D<float>  end_of_the_test_line = Vector2D<float>(test_line_point_1_x_, test_line_point_1_y_);
+  float angleBetweenCurrentAndMouse = Vector2D<float>::AngleBetweenVectors(
+    line_direction_vector, mouse_direction_vector);
 
-    Vector2D<float> direction_in_local_coordinates_system = Vector2D<float>::CreateUnitVectorFromBoundVector(currentMousePosition, beginning_of_test_line);
-
-    float angleBetweenCurrentAndMouse = Vector2D<float>::AngleBetweenVectors(end_of_the_test_line, direction_in_local_coordinates_system);
-
-    Vector2D<float>::RotateVectorOverTheAngle(&end_of_the_test_line, angleBetweenCurrentAndMouse);
-    test_line_point_1_x_ = end_of_the_test_line.x_;
-    test_line_point_1_y_ = end_of_the_test_line.y_;
-  }
+  Vector2D<float>::RotateVectorOverTheAngleOverPoint(&test_dynamic_line_point_1,
+    angleBetweenCurrentAndMouse, &test_dynamic_line_point_0);
 }
 
 void YasApplication::Run() {

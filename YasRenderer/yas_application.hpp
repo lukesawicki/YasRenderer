@@ -12,7 +12,7 @@
 class YasApplication {
   public:
     static constexpr int kScreenWidth = 640;
-    static constexpr int kScreenHeight = 480;
+    static constexpr int kScreenHeight = 640;
 
     static YasApplication *GetInstance() {
       if (instance_ != nullptr) {
@@ -63,11 +63,8 @@ class YasApplication {
     float mouse_x_position_ = false;
     float mouse_y_position_ = false;
 
-    int test_line_point_0_x_ = 0;
-    int test_line_point_0_y_ = 0;
-    int test_line_point_1_x_ = 64;
-    int test_line_point_1_y_ = 0;
-
+    Vector2D<float> test_dynamic_line_point_0;
+    Vector2D<float> test_dynamic_line_point_1;
     Vector2D<float> test_static_line_point_0;
     Vector2D<float> test_static_line_point_1;
 
