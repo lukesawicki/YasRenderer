@@ -12,7 +12,7 @@
 class YasApplication {
   public:
     static constexpr int kScreenWidth = 640;
-    static constexpr int kScreenHeight = 640;
+    static constexpr int kScreenHeight = 480;
 
     static YasApplication *GetInstance() {
       if (instance_ != nullptr) {

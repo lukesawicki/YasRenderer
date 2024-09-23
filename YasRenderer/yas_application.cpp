@@ -62,15 +62,15 @@ void YasApplication::PrepareRenderingSettings() {
 }
 
 void YasApplication::PrepareTestStuff() {
-  test_dynamic_line_point_0.x_ = 80;
-  test_dynamic_line_point_0.y_ = 80;
-  test_dynamic_line_point_1.x_ = 160;
-  test_dynamic_line_point_1.y_ = 160;
+  test_dynamic_line_point_1.x_ = 80;
+  test_dynamic_line_point_1.y_ = 80;
+  test_dynamic_line_point_0.x_ = 160;
+  test_dynamic_line_point_0.y_ = 160;
 
   test_static_line_point_0.x_ = 0;
   test_static_line_point_0.y_ = 0;
-  test_static_line_point_1.x_ = 640;
-  test_static_line_point_1.y_ = 480;
+  test_static_line_point_1.x_ = kScreenWidth;
+  test_static_line_point_1.y_ = kScreenHeight;
 }
 
 void YasApplication::Update() {
