@@ -204,17 +204,16 @@ void YasApplication::rotateTestLineInToMouseDirection() {
   Vector2D<float> currentMousePosition = Vector2D<float>(
     mouse_x_position_, mouse_y_position_);
 
-  // Vector2D<float> mouse_direction_from_start_start_line_point = Vector2D<float>::DirectionVectorFromBoundVector(test_dynamic_line_point_0, currentMousePosition);
+  Vector2D<float> mouse_direction_from_start_start_line_point = Vector2D<
+    float>::DirectionVectorFromBoundVector(test_dynamic_line_point_0,
+                                           currentMousePosition);
 
   Vector2D<float> line_direction_vector = Vector2D<
     float>::DirectionVectorFromBoundVector(test_dynamic_line_point_0,
                                            test_dynamic_line_point_1);
 
-  Vector2D<float> mouse_direction_vector = Vector2D<float>(
-    currentMousePosition.x_, currentMousePosition.y_);
-
   float angleBetweenCurrentAndMouse = Vector2D<float>::AngleBetweenVectors(
-    line_direction_vector, mouse_direction_vector);
+    line_direction_vector, mouse_direction_from_start_start_line_point);
 
   Vector2D<float>::RotateVectorOverTheAngleOverPoint(&test_dynamic_line_point_1,
     angleBetweenCurrentAndMouse, &test_dynamic_line_point_0);
