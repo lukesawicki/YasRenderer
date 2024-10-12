@@ -18,6 +18,18 @@ add_executable(YasRenderer main.cpp
         yas_application.hpp
         time_picker.cpp
         time_picker.hpp
+        vector_3d.hpp
+        point_3d.hpp
+        line_3d.hpp
+        polygon_2d.hpp
+        matrix_1_2.hpp
+        matrix_1_3.hpp
+        matrix_1_4.hpp
+        matrix_2_2.hpp
+        matrix_3_2.hpp
+        matrix_3_3.hpp
+        matrix_4_3.hpp
+        matrix_4_4.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})

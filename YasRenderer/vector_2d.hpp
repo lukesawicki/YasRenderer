@@ -113,4 +113,9 @@ class Vector2D {
     }
 };
 
+typedef Vector2D<float> Vertex2Df;
+typedef Vector2D<int> Vertex2Di;
+typedef Vector2D<float>* Vertex2DfPointer;
+typedef Vector2D<int>* Vertex2DiPointer;
+
 #endif //VECTOR_2D_HPP

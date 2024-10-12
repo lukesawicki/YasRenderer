@@ -33,6 +33,7 @@ class YasApplication {
     SDL_Renderer *sdl_renderer_ = nullptr;
     SDL_Texture *screen_texture_ = nullptr;
     PixelsTable *pixels_table_ = nullptr;
+    // PixelsTable *back_pixels_table_ = nullptr;
     SDL_Event event_;
     bool quit_ = false;
     double time_ = 0.0;
