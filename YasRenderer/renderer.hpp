@@ -75,4 +75,6 @@ int ScreenPixelPositionToArrayPosition(int x, int y, int window_width);
 void WindowPositionToCartesianPosition(float &x, float &y, int window_width,
                                        int window_height);
 
+
+
 #endif //RENDERER_HPP

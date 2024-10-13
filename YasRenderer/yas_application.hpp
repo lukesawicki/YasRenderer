@@ -13,6 +13,8 @@ class YasApplication {
   public:
     static constexpr int kScreenWidth = 640;
     static constexpr int kScreenHeight = 480;
+    static constexpr int kFov = 90; // in Degree;
+    static constexpr int aspectRatio = static_cast<int>(kScreenWidth) / static_cast<int>(kScreenHeight);
 
     static YasApplication *GetInstance() {
       if (instance_ != nullptr) {

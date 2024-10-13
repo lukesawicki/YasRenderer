@@ -30,6 +30,8 @@ add_executable(YasRenderer main.cpp
         matrix_3_3.hpp
         matrix_4_3.hpp
         matrix_4_4.hpp
+        test_box_3d.hpp
+        projector.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
