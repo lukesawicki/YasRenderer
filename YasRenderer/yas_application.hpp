@@ -6,15 +6,24 @@
 #define YAS_APPLICATION_HPP
 
 #include <SDL2/SDL.h>
+
+#include "matrix_4_4.hpp"
 #include "pixels_table.hpp"
+#include "test_box_3d.hpp"
 #include "time_picker.hpp"
 
 class YasApplication {
   public:
-    static constexpr int kScreenWidth = 640;
-    static constexpr int kScreenHeight = 480;
-    static constexpr int kFov = 90; // in Degree;
-    static constexpr int aspectRatio = static_cast<int>(kScreenWidth) / static_cast<int>(kScreenHeight);
+    static constexpr int kScreenWidth = 1024;
+    static constexpr int kScreenHeight = 768;
+    static constexpr int kFov = 35; // in Degree;
+    static constexpr int kAspectRatio = static_cast<int>(kScreenWidth) / static_cast<int>(kScreenHeight);
+
+    // int z_near_ = -10;
+    // int z_far_ = -200;
+
+    int z_near_ = -10;
+    int z_far_ = -200;
 
     static YasApplication *GetInstance() {
       if (instance_ != nullptr) {
@@ -23,6 +32,8 @@ class YasApplication {
       instance_ = new YasApplication();
       return instance_;
     }
+
+
 
     void Initialize();
     void Run();
@@ -61,6 +72,12 @@ class YasApplication {
       bool right_mouse_button_;
     };
 
+    Vector4D<float>* camera_position_;
+
+    Matrix_4_4 local_to_world_matrix_;
+    Matrix_4_4 world_to_camera_matrix_;
+    Matrix_4_4 world_to_projected_world_matrix_;
+
     Input* input_ = new Input();
     MousePositionChangeInformation* mouse_position_change_information_ = new MousePositionChangeInformation();
     float mouse_x_position_ = false;
@@ -71,11 +88,15 @@ class YasApplication {
     Vector2D<float> test_static_line_point_0;
     Vector2D<float> test_static_line_point_1;
 
+    TestBox3D test_box_3d;
+
     void CheckEndianness();
 
     void PrepareBasicSettings();
 
     void PrepareRenderingSettings();
+
+    void PrepareWorldSettings();
 
     void PrepareTestStuff();
 
@@ -100,6 +121,16 @@ class YasApplication {
     void rotateTestLineInToMouseDirection();
 
     void Clean();
+
+    void LocalToWorldTestBoxTransform();
+
+    void WorldToCameraTestBoxTransform();
+
+    void PerspectiveProjectionTestBoxProcess();
+
+    void Set2dVerticesForTestBox();
+
+    void DrawBoxOnScreen();
 };
 
 #endif //YAS_APPLICATION_HPP

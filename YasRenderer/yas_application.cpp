@@ -6,6 +6,9 @@
 #include <iostream>
 
 #include "yas_application.hpp"
+
+#include <ranges>
+
 #include "renderer.hpp"
 
 YasApplication *YasApplication::instance_ = nullptr;
@@ -13,6 +16,7 @@ YasApplication *YasApplication::instance_ = nullptr;
 void YasApplication::Initialize() {
   PrepareBasicSettings();
   PrepareRenderingSettings();
+  PrepareWorldSettings();
   PrepareTestStuff();
 }
 
@@ -61,6 +65,10 @@ void YasApplication::PrepareRenderingSettings() {
                                       kScreenHeight);
 }
 
+void YasApplication::PrepareWorldSettings() {
+  camera_position_ = new Vector4D<float>(0,0,0,1);
+}
+
 void YasApplication::PrepareTestStuff() {
   test_dynamic_line_point_1.x_ = 80;
   test_dynamic_line_point_1.y_ = 80;
@@ -75,6 +83,21 @@ void YasApplication::PrepareTestStuff() {
 
 void YasApplication::Update() {
   HandleTestStuff();
+
+  if(input_->up_) {
+    test_box_3d.position.z_+=0.05;
+  }
+
+  if(input_->down_) {
+    test_box_3d.position.z_-=0.05;
+  }
+
+  LocalToWorldTestBoxTransform();
+  // WorldToCameraTestBoxTransform();
+  PerspectiveProjectionTestBoxProcess();
+  Set2dVerticesForTestBox();
+
+
 }
 
 void YasApplication::HandleTestStuff() {
@@ -179,7 +202,7 @@ void YasApplication::Render() {
   pixels_table_->ClearColor(kBlack);
 
   DrawHudElements();
-
+  DrawBoxOnScreen();
   SDL_UpdateTexture(screen_texture_, NULL, pixels_table_->pixels_,
                     kScreenWidth * 4);
   SDL_RenderCopyExF(sdl_renderer_, screen_texture_, NULL, NULL, 0, NULL,
@@ -257,4 +280,50 @@ void YasApplication::Clean() {
   SDL_Quit();
 }
 
+void YasApplication::LocalToWorldTestBoxTransform() {
+  Matrix_4_4::TranslationMatrix(local_to_world_matrix_, test_box_3d.position.x_, test_box_3d.position.y_, test_box_3d.position.z_);
+  for (int i = 0; i < test_box_3d.vertices.size(); i++) {
+    Matrix_4_4::MultiplyByVector4D(local_to_world_matrix_, test_box_3d.vertices[i], test_box_3d.worldVertices[i]);
+  }
+}
+
+void YasApplication::WorldToCameraTestBoxTransform() {
+  Matrix_4_4::TranslationMatrix(world_to_camera_matrix_, camera_position_->x_, camera_position_->y_, camera_position_->z_);
+  for (int i = 0; i < test_box_3d.vertices.size(); i++) {
+    Matrix_4_4::MultiplyByVector4D(world_to_camera_matrix_, test_box_3d.worldVertices[i], test_box_3d.cameraVertices[i]);
+  }
+}
+
+void YasApplication::PerspectiveProjectionTestBoxProcess() {
+  Matrix_4_4::ProjectionMatrix(world_to_projected_world_matrix_,kFov, kAspectRatio, z_near_, z_far_);
+  for (int i = 0; i < test_box_3d.vertices.size(); i++) {
+
+    // option with camera
+    //Matrix_4_4::MultiplyByVector4D(world_to_projected_world_matrix_, test_box_3d.cameraVertices[i], test_box_3d.resultVertices[i]);
+    Matrix_4_4::MultiplyByVector4D(world_to_projected_world_matrix_, test_box_3d.worldVertices[i], test_box_3d.resultVertices[i]);
+  }
+}
+
+void YasApplication::Set2dVerticesForTestBox() {
+  for (int i = 0; i < test_box_3d.vertices.size(); i++) {
+    test_box_3d.vertices_in_2d_[i]->x_ = test_box_3d.resultVertices[i]->x_/test_box_3d.resultVertices[i]->w_;
+    test_box_3d.vertices_in_2d_[i]->y_ = test_box_3d.resultVertices[i]->y_/test_box_3d.resultVertices[i]->w_;
+  }
+}
+
+void YasApplication::DrawBoxOnScreen() {
+  DrawLine(*test_box_3d.vertices_in_2d_[0], *test_box_3d.vertices_in_2d_[1], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[1], *test_box_3d.vertices_in_2d_[2], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[2], *test_box_3d.vertices_in_2d_[3], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[3], *test_box_3d.vertices_in_2d_[0], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[4], *test_box_3d.vertices_in_2d_[5], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[5], *test_box_3d.vertices_in_2d_[6], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[6], *test_box_3d.vertices_in_2d_[7], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[7], *test_box_3d.vertices_in_2d_[4], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[5], *test_box_3d.vertices_in_2d_[0], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[6], *test_box_3d.vertices_in_2d_[1], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[7], *test_box_3d.vertices_in_2d_[2], *pixels_table_, kYellow);
+  DrawLine(*test_box_3d.vertices_in_2d_[4], *test_box_3d.vertices_in_2d_[3], *pixels_table_, kYellow);
+
+}
 

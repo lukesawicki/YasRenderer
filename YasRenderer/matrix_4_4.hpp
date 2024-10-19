@@ -53,18 +53,12 @@ class Matrix_4_4 {
 		}
 
 		// TODO refactor
-		static void MultiplyByVector4D(const Matrix_4_4& matrix_0, Vector4D<float>& vector_4d) {
-			Vector4D<float>* result = new Vector4D<float>();
-			result->x_ = matrix_0.element_0_0_ * vector_4d.x_ + matrix_0.element_0_1_ * vector_4d.y_ + matrix_0.element_0_2_ * vector_4d.z_ + matrix_0.element_0_3_ * vector_4d.w_;
-			result->y_ = matrix_0.element_1_0_ * vector_4d.x_ + matrix_0.element_1_1_ * vector_4d.y_ + matrix_0.element_1_2_ * vector_4d.z_ + matrix_0.element_1_3_ * vector_4d.w_;
-			result->z_ = matrix_0.element_2_0_ * vector_4d.x_ + matrix_0.element_2_1_ * vector_4d.y_ + matrix_0.element_2_2_ * vector_4d.z_ + matrix_0.element_2_3_ * vector_4d.w_;
-			result->w_ = matrix_0.element_3_0_ * vector_4d.x_ + matrix_0.element_3_1_ * vector_4d.y_ + matrix_0.element_3_2_ * vector_4d.z_ + matrix_0.element_3_3_ * vector_4d.w_;
+	static void MultiplyByVector4D(const Matrix_4_4& matrix_0, const Vector4D<float>* source_vector_4d, Vector4D<float>* result) {
+			result->x_ = matrix_0.element_0_0_ * source_vector_4d->x_ + matrix_0.element_0_1_ * source_vector_4d->y_ + matrix_0.element_0_2_ * source_vector_4d->z_ + matrix_0.element_0_3_ * source_vector_4d->w_;
+			result->y_ = matrix_0.element_1_0_ * source_vector_4d->x_ + matrix_0.element_1_1_ * source_vector_4d->y_ + matrix_0.element_1_2_ * source_vector_4d->z_ + matrix_0.element_1_3_ * source_vector_4d->w_;
+			result->z_ = matrix_0.element_2_0_ * source_vector_4d->x_ + matrix_0.element_2_1_ * source_vector_4d->y_ + matrix_0.element_2_2_ * source_vector_4d->z_ + matrix_0.element_2_3_ * source_vector_4d->w_;
+			result->w_ = matrix_0.element_3_0_ * source_vector_4d->x_ + matrix_0.element_3_1_ * source_vector_4d->y_ + matrix_0.element_3_2_ * source_vector_4d->z_ + matrix_0.element_3_3_ * source_vector_4d->w_;
 
-			vector_4d.x_ = result->x_;
-			vector_4d.y_ = result->y_;
-			vector_4d.z_ = result->z_;
-			vector_4d.w_ = result->w_;
-			delete result;
 		}
 
 		static void ClearOutMatrix(Matrix_4_4& matrix) {
@@ -82,12 +76,14 @@ class Matrix_4_4 {
 		}
 
 		static Matrix_4_4* GetTransposedMatrix(const Matrix_4_4* source_matrix) {
-      Matrix_4_4* destination_matrix = {
-            source_matrix.element_0_0_, source_matrix.element_1_0_, source_matrix.element_2_0_,source_matrix.element_3_0_,
-            source_matrix.element_0_1_, source_matrix.element_1_1_, source_matrix.element_2_1_, source_matrix.element_3_1_,
-            source_matrix.element_0_2_, source_matrix.element_1_2_, source_matrix.element_2_2_, source_matrix.element_3_2_,
-            source_matrix.element_0_3_, source_matrix.element_1_3_, source_matrix.element_2_3_, source_matrix.element_3_3_
-      };
+      Matrix_4_4* destination_matrix = new Matrix_4_4();
+			*destination_matrix = {
+      source_matrix->element_0_0_, source_matrix->element_1_0_, source_matrix->element_2_0_,source_matrix->element_3_0_,
+			source_matrix->element_0_1_, source_matrix->element_1_1_, source_matrix->element_2_1_, source_matrix->element_3_1_,
+			source_matrix->element_0_2_, source_matrix->element_1_2_, source_matrix->element_2_2_, source_matrix->element_3_2_,
+			source_matrix->element_0_3_, source_matrix->element_1_3_, source_matrix->element_2_3_, source_matrix->element_3_3_
+			};
+
       return destination_matrix;
     }
 

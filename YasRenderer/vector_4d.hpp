@@ -26,6 +26,21 @@ public:
     this->z_ = z;
     this->w_ = w;
   }
+
+  void Set(Type x, Type y, Type z, Type w) {
+    this->x_ = x;
+    this->y_ = y;
+    this->z_ = z;
+    this->w_ = w;
+  }
+
+  void Set(Vector4D<Type>* vector_4d) {
+    this->x_ = vector_4d->x_;
+    this->y_ = vector_4d->y_;
+    this->z_ = vector_4d->z_;
+    this->w_ = vector_4d->w_;
+  }
+
 };
 
 #endif //VECTOR_4D_HPP
