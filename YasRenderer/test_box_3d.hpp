@@ -56,7 +56,7 @@ class TestBox3D {
         vertices_in_2d_.push_back(new Vector2D<float>(0,0));
       }
 
-      position = Vector4D<float>(0, 0, -100, 0);
+      position = Vector4D<float>(0, 0, -150, 1);
     }
 };
 

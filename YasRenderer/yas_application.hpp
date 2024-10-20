@@ -14,16 +14,16 @@
 
 class YasApplication {
   public:
-    static constexpr int kScreenWidth = 1024;
-    static constexpr int kScreenHeight = 768;
+    static constexpr int kScreenWidth = 640;
+    static constexpr int kScreenHeight = 480;
     static constexpr int kFov = 80; // in Degree;
     static constexpr int kAspectRatio = static_cast<int>(kScreenWidth) / static_cast<int>(kScreenHeight);
 
     // int z_near_ = -10;
     // int z_far_ = -200;
 
-    int z_near_ = -10;
-    int z_far_ = -200;
+    int z_near_ = 0.1f;
+    int z_far_ = 100;
 
     static YasApplication *GetInstance() {
       if (instance_ != nullptr) {
