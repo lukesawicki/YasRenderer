@@ -24,6 +24,7 @@ public:
   void ClearColor(const Vector4D<Uint8> &drawing_color);
 
   void DrawPoint(int x, int y, const Vector4D<Uint8> &drawing_color);
+  void DrawPointV1(int x, int y, const Vector4D<Uint8> &drawing_color);
 
   void CartesianPositionToWindow(int &x, int &y);
 };

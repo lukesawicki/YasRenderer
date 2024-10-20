@@ -63,6 +63,21 @@ void PixelsTable::DrawPoint(int x, int y,
   }
 }
 
+void PixelsTable::DrawPointV1(int x, int y,
+                            const Vector4D<Uint8> &drawing_color) {
+  if (x >= 0 && x < window_dimensions_.x_ && y >= 0 &&
+      y < window_dimensions_.y_) {
+    pixels_[kNumberOfColors * (y * window_dimensions_.x_ + x) + kRedPosition] =
+        drawing_color.x_;
+    pixels_[kNumberOfColors * (y * window_dimensions_.x_ + x) +
+            kGreenPosition] = drawing_color.y_;
+    pixels_[kNumberOfColors * (y * window_dimensions_.x_ + x) + kBluePosition] =
+        drawing_color.z_;
+    pixels_[kNumberOfColors * (y * window_dimensions_.x_ + x) +
+            kAlphaPosition] = drawing_color.w_;
+      }
+}
+
 void PixelsTable::CartesianPositionToWindow(int &x, int &y) {
   x = x + static_cast<int>(0.5F * window_dimensions_.x_);
   y = -y + static_cast<int>(0.5F * window_dimensions_.y_);

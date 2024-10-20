@@ -16,7 +16,7 @@ class YasApplication {
   public:
     static constexpr int kScreenWidth = 1024;
     static constexpr int kScreenHeight = 768;
-    static constexpr int kFov = 35; // in Degree;
+    static constexpr int kFov = 80; // in Degree;
     static constexpr int kAspectRatio = static_cast<int>(kScreenWidth) / static_cast<int>(kScreenHeight);
 
     // int z_near_ = -10;
@@ -32,8 +32,6 @@ class YasApplication {
       instance_ = new YasApplication();
       return instance_;
     }
-
-
 
     void Initialize();
     void Run();

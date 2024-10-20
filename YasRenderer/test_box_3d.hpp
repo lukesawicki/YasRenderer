@@ -29,12 +29,12 @@ class TestBox3D {
     TestBox3D() {
       // vertices = new Vector4D<float>*[8];
       vertices.push_back(new Vector4D<float>(-50, 50, 50, 1));
-      vertices.push_back(new Vector4D<float>(-50, -50, 50, 1));
-      vertices.push_back(new Vector4D<float>(50, -50, 50, 1));
       vertices.push_back(new Vector4D<float>(50, 50, 50, 1));
       vertices.push_back(new Vector4D<float>(50, 50, -50, 1));
+      vertices.push_back(new Vector4D<float>(-50, 50, -50, 1));
       vertices.push_back(new Vector4D<float>(-50, -50, -50, 1));
-      vertices.push_back(new Vector4D<float>(-50, -50, -50, 1));
+      vertices.push_back(new Vector4D<float>(-50, -50, 50, 1));
+      vertices.push_back(new Vector4D<float>(50, -50, 50, 1));
       vertices.push_back(new Vector4D<float>(50, -50, -50, 1));
 
       // worldVertices = new Vector4D<float>*[8];
@@ -56,7 +56,7 @@ class TestBox3D {
         vertices_in_2d_.push_back(new Vector2D<float>(0,0));
       }
 
-      position = Vector4D<float>(0, 0, -100, 1);
+      position = Vector4D<float>(0, 0, -100, 0);
     }
 };
 

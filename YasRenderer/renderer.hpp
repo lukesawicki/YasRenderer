@@ -37,6 +37,8 @@ const Vector4D<Uint8> kPolygon(250, 180, 10, 0);
 
 void DrawLine(const Vector2D<float> &point_0, const Vector2D<float> &point_1,
               PixelsTable &pixels_table, const Vector4D<Uint8> &drawing_color);
+void DrawLineV1(const Vector2D<float> &point_0, const Vector2D<float> &point_1,
+              PixelsTable &pixels_table, const Vector4D<Uint8> &drawing_color);
 
 Vector2D<float> *GenerateVerticesFromNumbers(const std::vector<int> &numbers);
 

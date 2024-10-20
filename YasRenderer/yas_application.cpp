@@ -306,24 +306,29 @@ void YasApplication::PerspectiveProjectionTestBoxProcess() {
 
 void YasApplication::Set2dVerticesForTestBox() {
   for (int i = 0; i < test_box_3d.vertices.size(); i++) {
-    test_box_3d.vertices_in_2d_[i]->x_ = test_box_3d.resultVertices[i]->x_/test_box_3d.resultVertices[i]->w_;
-    test_box_3d.vertices_in_2d_[i]->y_ = test_box_3d.resultVertices[i]->y_/test_box_3d.resultVertices[i]->w_;
+
+    float xndc = test_box_3d.resultVertices[i]->x_/test_box_3d.resultVertices[i]->w_;
+    float yndc = test_box_3d.resultVertices[i]->y_/test_box_3d.resultVertices[i]->w_;
+    test_box_3d.vertices_in_2d_[i]->x_ = (kScreenWidth * 0.5f) *  (xndc + 1.0f);
+    test_box_3d.vertices_in_2d_[i]->y_ = (kScreenHeight * 0.5f) * (1.0f - yndc);
   }
 }
 
 void YasApplication::DrawBoxOnScreen() {
-  DrawLine(*test_box_3d.vertices_in_2d_[0], *test_box_3d.vertices_in_2d_[1], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[1], *test_box_3d.vertices_in_2d_[2], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[2], *test_box_3d.vertices_in_2d_[3], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[3], *test_box_3d.vertices_in_2d_[0], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[4], *test_box_3d.vertices_in_2d_[5], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[5], *test_box_3d.vertices_in_2d_[6], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[6], *test_box_3d.vertices_in_2d_[7], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[7], *test_box_3d.vertices_in_2d_[4], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[5], *test_box_3d.vertices_in_2d_[0], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[6], *test_box_3d.vertices_in_2d_[1], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[7], *test_box_3d.vertices_in_2d_[2], *pixels_table_, kYellow);
-  DrawLine(*test_box_3d.vertices_in_2d_[4], *test_box_3d.vertices_in_2d_[3], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[0], *test_box_3d.vertices_in_2d_[1], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[1], *test_box_3d.vertices_in_2d_[2], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[2], *test_box_3d.vertices_in_2d_[3], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[3], *test_box_3d.vertices_in_2d_[0], *pixels_table_, kYellow);
+
+  DrawLineV1(*test_box_3d.vertices_in_2d_[4], *test_box_3d.vertices_in_2d_[5], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[5], *test_box_3d.vertices_in_2d_[6], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[6], *test_box_3d.vertices_in_2d_[7], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[7], *test_box_3d.vertices_in_2d_[4], *pixels_table_, kYellow);
+
+  DrawLineV1(*test_box_3d.vertices_in_2d_[5], *test_box_3d.vertices_in_2d_[0], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[6], *test_box_3d.vertices_in_2d_[1], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[7], *test_box_3d.vertices_in_2d_[2], *pixels_table_, kYellow);
+  DrawLineV1(*test_box_3d.vertices_in_2d_[4], *test_box_3d.vertices_in_2d_[3], *pixels_table_, kYellow);
 
 }
 
