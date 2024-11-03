@@ -67,6 +67,10 @@ void YasApplication::PrepareRenderingSettings() {
 
 void YasApplication::PrepareWorldSettings() {
   camera_position_ = new Vector4D<float>(0,0,0,1);
+
+  for (int i = 0; i < test_box_3d.vertices.size(); i++) {
+    test_box_3d.rotatedvertices[i]->Set(test_box_3d.vertices[i]);
+  }
 }
 
 void YasApplication::PrepareTestStuff() {
@@ -93,9 +97,13 @@ void YasApplication::Update() {
   }
 
   LocalToWorldTestBoxTransform();
-  // WorldToCameraTestBoxTransform();
+  WorldToCameraTestBoxTransform();
+
   PerspectiveProjectionTestBoxProcess();
   Set2dVerticesForTestBox();
+
+
+
 
 
 }
@@ -282,13 +290,27 @@ void YasApplication::Clean() {
 
 void YasApplication::LocalToWorldTestBoxTransform() {
   Matrix_4_4::TranslationMatrix(local_to_world_matrix_, test_box_3d.position.x_, test_box_3d.position.y_, test_box_3d.position.z_);
+
+  // for (int i = 0; i < test_box_3d.vertices.size(); i++) {
+  //   test_box_3d.rotatedvertices[i]->Set(test_box_3d.vertices[i]);
+  // }
+
+  if(input_->right_) {
+    Matrix_4_4::RotationAroundX(rotation, 1.0f);
+    for (int i = 0; i < test_box_3d.vertices.size(); i++) {
+      Matrix_4_4::MultiplyByVector4D(rotation, test_box_3d.rotatedvertices[i], test_box_3d.rotatedvertices[i]);
+    }
+  }
   for (int i = 0; i < test_box_3d.vertices.size(); i++) {
-    Matrix_4_4::MultiplyByVector4D(local_to_world_matrix_, test_box_3d.vertices[i], test_box_3d.worldVertices[i]);
+
+    Matrix_4_4::MultiplyByVector4D(local_to_world_matrix_, test_box_3d.rotatedvertices[i], test_box_3d.worldVertices[i]);
   }
 }
 
 void YasApplication::WorldToCameraTestBoxTransform() {
-  Matrix_4_4::TranslationMatrix(world_to_camera_matrix_, camera_position_->x_, camera_position_->y_, camera_position_->z_);
+  Matrix_4_4::TranslationMatrix(world_to_camera_matrix_, -camera_position_->x_, -camera_position_->y_, -camera_position_->z_);
+  world_to_camera_matrix_.element_1_1_=-1;
+  world_to_camera_matrix_.element_2_2_=1;
   for (int i = 0; i < test_box_3d.vertices.size(); i++) {
     Matrix_4_4::MultiplyByVector4D(world_to_camera_matrix_, test_box_3d.worldVertices[i], test_box_3d.cameraVertices[i]);
   }
@@ -299,18 +321,19 @@ void YasApplication::PerspectiveProjectionTestBoxProcess() {
   for (int i = 0; i < test_box_3d.vertices.size(); i++) {
 
     // option with camera
-    //Matrix_4_4::MultiplyByVector4D(world_to_projected_world_matrix_, test_box_3d.cameraVertices[i], test_box_3d.resultVertices[i]);
-    Matrix_4_4::MultiplyByVector4D(world_to_projected_world_matrix_, test_box_3d.worldVertices[i], test_box_3d.resultVertices[i]);
+    Matrix_4_4::MultiplyByVector4D(world_to_projected_world_matrix_, test_box_3d.cameraVertices[i], test_box_3d.resultVertices[i]);
+    //Matrix_4_4::MultiplyByVector4D(world_to_projected_world_matrix_, test_box_3d.worldVertices[i], test_box_3d.resultVertices[i]);
   }
 }
+
 
 void YasApplication::Set2dVerticesForTestBox() {
   for (int i = 0; i < test_box_3d.vertices.size(); i++) {
 
-    float xndc = test_box_3d.resultVertices[i]->x_/test_box_3d.resultVertices[i]->w_;
-    float yndc = test_box_3d.resultVertices[i]->y_/test_box_3d.resultVertices[i]->w_;
-    test_box_3d.vertices_in_2d_[i]->x_ = (kScreenWidth * 0.5f) *  (xndc + 1.0f);
-    test_box_3d.vertices_in_2d_[i]->y_ = (kScreenHeight * 0.5f) * (1.0f - yndc);
+    float zndc = test_box_3d.resultVertices[i]->z_/test_box_3d.resultVertices[i]->x_;
+    float yndc = test_box_3d.resultVertices[i]->y_/test_box_3d.resultVertices[i]->x_;
+    test_box_3d.vertices_in_2d_[i]->x_ = (kScreenWidth * 0.5f) *  (1.0f - yndc);
+    test_box_3d.vertices_in_2d_[i]->y_ = (kScreenHeight * 0.5f) * (1.0f + zndc);
   }
 }
 

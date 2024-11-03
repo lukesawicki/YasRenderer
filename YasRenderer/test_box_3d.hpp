@@ -21,6 +21,7 @@ class TestBox3D {
     Vector4D<float> v6;
     Vector4D<float> v7;
     std::vector<Vector4D<float>*> vertices;
+    std::vector<Vector4D<float>*> rotatedvertices;
     std::vector<Vector4D<float>*> worldVertices;
     std::vector<Vector4D<float>*> cameraVertices;
     std::vector<Vector2D<float>*> vertices_in_2d_;
@@ -28,14 +29,14 @@ class TestBox3D {
 
     TestBox3D() {
       // vertices = new Vector4D<float>*[8];
-      vertices.push_back(new Vector4D<float>(-50, 50, 50, 1));
-      vertices.push_back(new Vector4D<float>(50, 50, 50, 1));
-      vertices.push_back(new Vector4D<float>(50, 50, -50, 1));
-      vertices.push_back(new Vector4D<float>(-50, 50, -50, 1));
-      vertices.push_back(new Vector4D<float>(-50, -50, -50, 1));
-      vertices.push_back(new Vector4D<float>(-50, -50, 50, 1));
-      vertices.push_back(new Vector4D<float>(50, -50, 50, 1));
-      vertices.push_back(new Vector4D<float>(50, -50, -50, 1));
+      vertices.push_back(new Vector4D<float>(-20, 20, 20, 1));
+      vertices.push_back(new Vector4D<float>(20, 20, 20, 1));
+      vertices.push_back(new Vector4D<float>(20, 20, -20, 1));
+      vertices.push_back(new Vector4D<float>(-20, 20, -20, 1));
+      vertices.push_back(new Vector4D<float>(-20, -20, -20, 1));
+      vertices.push_back(new Vector4D<float>(-20, -20, 20, 1));
+      vertices.push_back(new Vector4D<float>(20, -20, 20, 1));
+      vertices.push_back(new Vector4D<float>(20, -20, -20, 1));
 
       // worldVertices = new Vector4D<float>*[8];
       for (int i = 0; i < 8; i++) {
@@ -47,6 +48,10 @@ class TestBox3D {
         cameraVertices.push_back(new Vector4D<float>(0, 0, 0, 1));
       }
 
+
+      for (int i = 0; i < 8; i++) {
+        rotatedvertices.push_back(new Vector4D<float>(0, 0, 0, 1));
+      }
       // resultVertices = new Vector4D<float>*[8];
       for (int i = 0; i < 8; i++) {
         resultVertices.push_back(new Vector4D<float>(0, 0, 0, 1));
@@ -56,7 +61,7 @@ class TestBox3D {
         vertices_in_2d_.push_back(new Vector2D<float>(0,0));
       }
 
-      position = Vector4D<float>(0, 0, -150, 1);
+      position = Vector4D<float>(80, 0, 30, 1);
     }
 };
 
